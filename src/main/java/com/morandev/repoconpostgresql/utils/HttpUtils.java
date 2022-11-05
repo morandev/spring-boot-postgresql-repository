@@ -11,34 +11,29 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class HttpUtils {
+import java.io.IOException;
 
-    public String sendPost(String url, JSONObject inputJson) {
+public class HttpUtils {
+    public String sendPost(String url, JSONObject inputJson) throws IOException {
         String result = "";
 
         HttpPost post = new HttpPost(url);
 
-        try {
-            StringEntity stringEntity = new StringEntity(inputJson.toString());
+        StringEntity stringEntity = new StringEntity(inputJson.toString());
 
-            post.setEntity(stringEntity);
-            post.setHeader("Accept", "application/json");
-            post.setHeader("Content-type", "application/json");
+        post.setEntity(stringEntity);
+        post.setHeader("Accept", "application/json");
+        post.setHeader("Content-type", "application/json");
 
-            try (
-                    CloseableHttpClient httpClient = HttpClients.createDefault();
-                    CloseableHttpResponse res = httpClient.execute(post)
-            ) {
-                result = EntityUtils.toString(res.getEntity());
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        try (
+                CloseableHttpClient httpClient = HttpClients.createDefault();
+                CloseableHttpResponse res = httpClient.execute(post)
+        ) {
+            return result = EntityUtils.toString(res.getEntity());
         }
-
-        return result;
     }
 
-    public JSONObject sendGET(String url, String queryAPI) {
+    public JSONObject sendGet(String url, String queryAPI) {
         JSONObject result = null;
 
         try {
